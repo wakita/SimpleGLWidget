@@ -1,0 +1,13 @@
+# GLWidgetのサンプル
+
+Qt5.5を使って，QtのGUI機能とOpenGLレンダリングを統合する簡単な例です．
+
+アプリケーションはQt Widgets Applicationとして作成し，Designモードで追加したQOpenGLWidgetを自分で用意したGLWidgetクラスに昇格させることで特殊化しています．画面，右のラジオボタンｔたちからはQtのSignal-Slot機構を用いてGLWidgetクラスと繋ぎこんできます．
+
+OpenGLに関連して，main.cxxでOpenGLのバージョン(4.3)とプロファイル(Core Profile)を指定してから，OpenGL 4.3 Core Profileが提供する関数群を初期化した関数表を得ています．
+
+一部，Mac対応をしているように見えますが，このままでは動かないと思います．プロファイルに基づいたテンプレートプログラミングするのが正しそうです．
+
+実行環境はDell Alienware 13in, intel HD 5500です．
+
+この機械はNvidia Optimusカードの設定によって，Nvidia GeForce 860Mで描画できるはずなのですが，今のところこのカードをQt側できちんと認識していません．Qt5で作成したアプリは起動時にOpenGLのドライバの有無を確認し，ない場合にはDirectXを用いたOpenGLのエミュレーション環境で実行しようとします．intel HD 5500の場合はいいのですが，GeForce 860Mの場合にドライバが見つからないらしく，OpenGL 1.0, No Profileと誤認してクラッシュしているようです．Nvidia Optimusドライバが悪さをしているような気がします．オンボードのGPUを持たないNvidiaなデスクトップでも試してみます．
