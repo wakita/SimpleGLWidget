@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
   fmt.setProfile(QSurfaceFormat::CoreProfile);
   fmt.setSamples(4);
   fmt.setDepthBufferSize(24);
+  fmt.setOption(QSurfaceFormat::DebugContext);
   QSurfaceFormat::setDefaultFormat(fmt);
 
   MainWindow *w = new MainWindow;

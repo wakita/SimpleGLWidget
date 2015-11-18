@@ -1,6 +1,7 @@
 #ifndef GLWIDGET_HXX
 #define GLWIDGET_HXX
 
+#include <QOpenGLDebugMessage>
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions_4_3_Core>
 
@@ -14,8 +15,12 @@ public:
   void initializeGL();
   void paintGL();
 
+private:
+  //void applicationMessage(QString &message);
+
 private slots:
   void changeBackground();
+  void onMessageLogged(const QOpenGLDebugMessage & debugMessage);
 };
 
 #endif // GLWIDGET_HXX

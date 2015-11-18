@@ -1,5 +1,7 @@
 #include "glwidget.hxx"
+#include <QtDebug>
 #include <QPushButton>
+#include <iostream>
 
 std::map<QSurfaceFormat::OpenGLContextProfile, std::string> profile_str = {
   { QSurfaceFormat::OpenGLContextProfile::NoProfile, "NO Profile"},
@@ -11,10 +13,48 @@ GLWidget::GLWidget(QWidget *parent)
   : QOpenGLWidget(parent) {
 }
 
+void GLWidget::onMessageLogged(const QOpenGLDebugMessage &debugMessage) {
+  qDebug() << "GL Debug:" << debugMessage.message().toStdString().c_str();
+}
+
+QOpenGLDebugLogger *logger;
+
+void applicationMessage(QString &message) {
+  logger->logMessage(QOpenGLDebugMessage::createApplicationMessage(message));
+}
+
 void GLWidget::initializeGL() {
-  QSurfaceFormat fmt = QOpenGLContext::currentContext()->format();
-  qWarning("OpenGL %d.%d %s", fmt.version().first, fmt.version().second, profile_str[fmt.profile()].c_str());
   initializeOpenGLFunctions();
+
+  QOpenGLContext *ctx = QOpenGLContext::currentContext();
+  if (ctx->hasExtension(QByteArrayLiteral("GL_KHR_debug"))) {
+    logger = new QOpenGLDebugLogger(this);
+    connect(logger, SIGNAL(messageLogged(QOpenGLDebugMessage)),
+            this, SLOT(onMessageLogged(QOpenGLDebugMessage)),
+            Qt::DirectConnection);
+
+    logger->initialize();
+    logger->startLogging();
+    applicationMessage(QStringLiteral("Message logging started for OpenGL diagnostics"));
+  }
+
+  QString m_text;
+  QSurfaceFormat fmt = QOpenGLContext::currentContext()->format();
+
+  m_text.sprintf("VERSION:  %s", glGetString(GL_VERSION));
+  applicationMessage(m_text);
+
+  m_text.sprintf("PROFILE:  %s", profile_str[fmt.profile()].c_str());
+  applicationMessage(m_text);
+
+  m_text.sprintf("VENDOR:   %s", glGetString(GL_VENDOR));
+  applicationMessage(m_text);
+
+  m_text.sprintf("RENDERER: %s", glGetString(GL_RENDERER));
+  applicationMessage(m_text);
+
+  m_text.sprintf("GLSL:     %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
+  applicationMessage(m_text);
 }
 
 int clearColor = 0;
