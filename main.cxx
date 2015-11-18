@@ -1,8 +1,6 @@
 #include "mainwindow.hxx"
 #include <QApplication>
 #include <QSurfaceFormat>
-#include <QOpenGLContext>
-#include <iostream>
 #include <map>
 
 extern Ui::MainWindow mainWindow;

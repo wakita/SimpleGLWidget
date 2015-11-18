@@ -1,15 +1,15 @@
 #include "glwidget.hxx"
 #include <QPushButton>
 
-GLWidget::GLWidget(QWidget *parent)
-  : QOpenGLWidget(parent) {
-}
-
 std::map<QSurfaceFormat::OpenGLContextProfile, std::string> profile_str = {
   { QSurfaceFormat::OpenGLContextProfile::NoProfile, "NO Profile"},
   { QSurfaceFormat::OpenGLContextProfile::CoreProfile, "Core Profile"},
   { QSurfaceFormat::OpenGLContextProfile::CompatibilityProfile, "Compatibility Profile"}
 };
+
+GLWidget::GLWidget(QWidget *parent)
+  : QOpenGLWidget(parent) {
+}
 
 void GLWidget::initializeGL() {
   QSurfaceFormat fmt = QOpenGLContext::currentContext()->format();
