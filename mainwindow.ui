@@ -79,6 +79,19 @@
      </layout>
     </widget>
    </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>870</x>
+      <y>160</y>
+      <width>151</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Quit</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -159,6 +172,22 @@
     <hint type="destinationlabel">
      <x>830</x>
      <y>612</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>pressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>945</x>
+     <y>220</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>951</x>
+     <y>298</y>
     </hint>
    </hints>
   </connection>
