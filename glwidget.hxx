@@ -4,7 +4,8 @@
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions_4_3_Core>
 
-class GLWidget : public QOpenGLWidget
+class GLWidget : public QOpenGLWidget,
+    protected QOpenGLFunctions_4_3_Core
 {
   Q_OBJECT
 public:
@@ -12,9 +13,6 @@ public:
 
   void initializeGL();
   void paintGL();
-
-private:
-  QOpenGLFunctions_4_3_Core *gl;
 
 private slots:
   void changeBackground();
