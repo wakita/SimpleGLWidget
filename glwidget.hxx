@@ -14,6 +14,7 @@ public:
 
   void initializeGL();
   void paintGL();
+  void resizeGL(int h, int w);
 
 private:
   //void applicationMessage(QString &message);
@@ -21,6 +22,7 @@ private:
 private slots:
   void changeBackground();
   void onMessageLogged(const QOpenGLDebugMessage & debugMessage);
+  void keyPressEvent(QKeyEvent * event);
 };
 
 #endif // GLWIDGET_HXX
